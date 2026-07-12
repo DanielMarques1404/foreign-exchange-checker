@@ -1,3 +1,6 @@
+import { LiveRates } from "./components/layout/LiveRates"
+import { LiveRatesGroup } from "./components/layout/LiveRatesGroup"
+
 function App() {
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
@@ -15,6 +18,7 @@ function App() {
             Projeto configurado com React, Vite, TypeScript e Tailwind CSS. Use este ponto
             de partida para estruturar o conversor, historico, comparacao, favoritos e log.
           </p>
+          <LiveRatesGroup liveRatesList={[{ currency: "EUR/GBP", value: 1.0, rate: 1.0 }, { currency: "USD/CHF", value: 1.0, rate: -1.0 }]} />
         </div>
       </section>
     </main>
