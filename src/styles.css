@@ -30,3 +30,13 @@ body {
   margin: 0;
   font-family: var(--font-mono);
 }
+
+@utility animate-live-rates-marquee {
+  animation: live-rates-marquee 25s linear infinite;
+}
+
+@keyframes live-rates-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
