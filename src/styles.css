@@ -32,7 +32,7 @@ body {
 }
 
 @utility animate-live-rates-marquee {
-  animation: live-rates-marquee 25s linear infinite;
+  animation: live-rates-marquee 500s linear infinite;
 }
 
 @keyframes live-rates-marquee {

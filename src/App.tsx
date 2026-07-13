@@ -1,6 +1,9 @@
 import { LiveRatesGroup } from "./components/layout/LiveRatesGroup";
+import { useLiveRates } from "./hooks/useLiveRates";
 
 function App() {
+  const { liveRatesList, isLoading, error } = useLiveRates();
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
       <section className="mx-auto flex max-w-5xl flex-col gap-8">
@@ -23,16 +26,9 @@ function App() {
             comparacao, favoritos e log.
           </p>
           <div className="w-full overflow-hidden">
-            <LiveRatesGroup
-              liveRatesList={[
-                { currency: "EUR/GBP", value: 1.0, rate: 1.0 },
-                { currency: "USD/CHF", value: 1.0, rate: -1.0 },
-                { currency: "EUR/GBP", value: 1.0, rate: 1.0 },
-                { currency: "USD/CHF", value: 1.0, rate: -1.0 },
-                { currency: "EUR/GBP", value: 1.0, rate: 1.0 },
-                { currency: "USD/CHF", value: 1.0, rate: -1.0 },
-              ]}
-            />
+            {isLoading && <p className="text-sm text-slate-300">Carregando cotacoes...</p>}
+            {error && <p className="text-sm text-Red-500">{error}</p>}
+            {!isLoading && !error && <LiveRatesGroup liveRatesList={liveRatesList} />}
           </div>
         </div>
       </section>
