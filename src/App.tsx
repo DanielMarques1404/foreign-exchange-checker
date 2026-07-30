@@ -1,4 +1,5 @@
 import { LiveRatesGroup } from "./components/layout/LiveRatesGroup";
+import { TabButtonGroup } from "./components/layout/TabButtonGroup";
 import { useLiveRates } from "./hooks/useLiveRates";
 
 function App() {
@@ -30,6 +31,11 @@ function App() {
             {error && <p className="text-sm text-Red-500">{error}</p>}
             {!isLoading && !error && <LiveRatesGroup liveRatesList={liveRatesList} />}
           </div>
+          <TabButtonGroup tabButtons={[
+            { id: 0, label: "Historico", counter: 8 },
+            { id: 1, label: "Comparacao" },
+            { id: 2, label: "Favoritos", counter: 5 }
+          ]} />
         </div>
       </section>
     </main>

@@ -1,5 +1,12 @@
 export type LiveRatesType = {
-    currency: string;
-    value: number;
-    rate: number;
-}
+  currency: string;
+  value: number;
+  change?: number;
+};
+
+
+export type TabButtonType = {
+  id: number;
+  label: string;
+  counter?: number;
+};
