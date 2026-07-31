@@ -1,10 +1,17 @@
+import { CurrencyItemGroup } from "./components/layout/CurrencyItemGroup";
 import { LiveRatesGroup } from "./components/layout/LiveRatesGroup";
 import { SelectItemGroup } from "./components/layout/SelectItemGroup";
 import { TabButtonGroup } from "./components/layout/TabButtonGroup";
+import { useCurrencies } from "./hooks/useCurrencies";
 import { useLiveRates } from "./hooks/useLiveRates";
 
 function App() {
   const { liveRatesList, isLoading, error } = useLiveRates();
+  const {
+    currenciesList,
+    isLoading: isLoadingCurrencies,
+    error: currenciesError,
+  } = useCurrencies();
 
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
@@ -44,6 +51,17 @@ function App() {
                 { id: 2, label: "favorites" },
               ]}
             />
+          </div>
+          <div className="max-h-72 overflow-y-auto">
+            {isLoadingCurrencies && (
+              <p className="text-sm text-slate-300">Loading currencies...</p>
+            )}
+            {currenciesError && (
+              <p className="text-sm text-Red-500">{currenciesError}</p>
+            )}
+            {!isLoadingCurrencies && !currenciesError && (
+              <CurrencyItemGroup currenciesList={currenciesList} />
+            )}
           </div>
         </div>
       </section>

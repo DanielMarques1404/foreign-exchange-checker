@@ -4,6 +4,12 @@ export type LiveRatesType = {
   change?: number;
 };
 
+export type CurrencyType = {
+  code: string;
+  name: string;
+  symbol: string;
+  favorite?: boolean;
+};
 
 export type TabButtonType = {
   id: number;
