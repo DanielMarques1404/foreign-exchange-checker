@@ -10,3 +10,9 @@ export type TabButtonType = {
   label: string;
   counter?: number;
 };
+
+export type SelectItemType = {
+  id: number;
+  label: string;
+  counter?: number;
+};
