@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import { getCurrencyFlagSrc } from "../domain/currencyFlags";
 import { CurrencyType } from "../domain/entities";
 import { api } from "../utils/api";
 
@@ -27,12 +28,22 @@ export const useCurrencies = () => {
           signal: controller.signal,
         });
 
-        const currencies = response.data.map((currency) => ({
-          code: currency.iso_code,
-          name: currency.name,
-          symbol: currency.symbol,
-          favorite: ["USD", "EUR", "GBP"].includes(currency.iso_code),
-        }));
+        const currencies = response.data
+          .map((currency): CurrencyType | null => {
+            const flagSrc = getCurrencyFlagSrc(currency.iso_code);
+
+            if (!flagSrc) return null;
+
+            return {
+              code: currency.iso_code,
+              name: currency.name,
+              symbol: currency.symbol,
+              flagSrc,
+              favorite: ["USD", "EUR", "GBP"].includes(currency.iso_code),
+            };
+          })
+          .filter((currency): currency is CurrencyType => currency !== null)
+          .sort((a, b) => a.name.localeCompare(b.name));
 
         setCurrenciesList(currencies);
       } catch (error) {

@@ -52,7 +52,7 @@ function App() {
               ]}
             />
           </div>
-          <div className="max-h-72 overflow-y-auto">
+          <div>
             {isLoadingCurrencies && (
               <p className="text-sm text-slate-300">Loading currencies...</p>
             )}

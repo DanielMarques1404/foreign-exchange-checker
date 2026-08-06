@@ -8,6 +8,7 @@ export type CurrencyType = {
   code: string;
   name: string;
   symbol: string;
+  flagSrc: string;
   favorite?: boolean;
 };
 

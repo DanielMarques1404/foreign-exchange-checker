@@ -31,6 +31,15 @@ body {
   font-family: var(--font-mono);
 }
 
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 @utility animate-live-rates-marquee {
   animation: live-rates-marquee 500s linear infinite;
 }
