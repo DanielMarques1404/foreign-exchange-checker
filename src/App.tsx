@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { CurrencyButton } from "./components/layout/CurrencyButton";
 import { CurrencyItemGroup } from "./components/layout/CurrencyItemGroup";
 import { LiveRatesGroup } from "./components/layout/LiveRatesGroup";
 import { SelectItemGroup } from "./components/layout/SelectItemGroup";
@@ -6,12 +8,22 @@ import { useCurrencies } from "./hooks/useCurrencies";
 import { useLiveRates } from "./hooks/useLiveRates";
 
 function App() {
+  const [showCurrencyList, setShowCurrencyList] = useState(false);
+  const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("USD");
   const { liveRatesList, isLoading, error } = useLiveRates();
   const {
     currenciesList,
     isLoading: isLoadingCurrencies,
     error: currenciesError,
   } = useCurrencies();
+  const selectedCurrency =
+    currenciesList.find((currency) => currency.code === selectedCurrencyCode) ??
+    currenciesList[0];
+
+  const selectCurrency = (currencyCode: string) => {
+    setSelectedCurrencyCode(currencyCode);
+    setShowCurrencyList(false);
+  };
 
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
@@ -52,17 +64,35 @@ function App() {
               ]}
             />
           </div>
-          <div>
-            {isLoadingCurrencies && (
-              <p className="text-sm text-slate-300">Loading currencies...</p>
+          <CurrencyButton
+            currency={selectedCurrency}
+            isOpen={showCurrencyList}
+            onClick={() => setShowCurrencyList(!showCurrencyList)}
+          >
+            {showCurrencyList && (
+              <>
+                {isLoadingCurrencies && (
+                  <p className="absolute left-0 top-full z-10 mt-2 text-sm text-slate-300">
+                    Loading currencies...
+                  </p>
+                )}
+                {currenciesError && (
+                  <p className="absolute left-0 top-full z-10 mt-2 text-sm text-Red-500">
+                    {currenciesError}
+                  </p>
+                )}
+                {!isLoadingCurrencies && !currenciesError && (
+                  <CurrencyItemGroup
+                    currenciesList={currenciesList}
+                    selectedCurrencyCode={
+                      selectedCurrency?.code ?? selectedCurrencyCode
+                    }
+                    onSelectCurrency={selectCurrency}
+                  />
+                )}
+              </>
             )}
-            {currenciesError && (
-              <p className="text-sm text-Red-500">{currenciesError}</p>
-            )}
-            {!isLoadingCurrencies && !currenciesError && (
-              <CurrencyItemGroup currenciesList={currenciesList} />
-            )}
-          </div>
+          </CurrencyButton>
         </div>
       </section>
     </main>
