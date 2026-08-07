@@ -6,7 +6,7 @@ import { CurrencyItem } from "./CurrencyItem";
 type CurrencyItemGroupProps = {
   currenciesList: CurrencyType[];
   selectedCurrencyCode: string;
-  onSelectCurrency: (currencyCode: string) => void;
+  onSelectCurrency: (currency: CurrencyType) => void;
 };
 
 export const CurrencyItemGroup = ({
@@ -62,7 +62,7 @@ export const CurrencyItemGroup = ({
           key={currency.code}
           currency={currency}
           selected={selectedCurrencyCode === currency.code}
-          onSelect={() => onSelectCurrency(currency.code)}
+          onSelect={() => onSelectCurrency(currency)}
         />
       ))}
       <div className="flex justify-between border-b border-Neutral-500 bg-Neutral-900 p-2 text-[16px] text-Neutral-200">
@@ -74,7 +74,7 @@ export const CurrencyItemGroup = ({
           key={currency.code}
           currency={currency}
           selected={selectedCurrencyCode === currency.code}
-          onSelect={() => onSelectCurrency(currency.code)}
+          onSelect={() => onSelectCurrency(currency)}
         />
       ))}
     </div>

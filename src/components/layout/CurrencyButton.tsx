@@ -1,39 +1,55 @@
-import type { ReactNode } from "react";
+import { useState } from "react";
 
 import { CurrencyType } from "../../domain/entities";
+import { CurrencyItemGroup } from "./CurrencyItemGroup";
 
 type CurrencyButtonProps = {
-  currency?: CurrencyType;
-  isOpen: boolean;
-  onClick: () => void;
-  children?: ReactNode;
+  currenciesList: CurrencyType[];
+  initialCurrencyCode?: string;
+  isLoading?: boolean;
+  error?: string | null;
+  onCurrencyChange?: (currency: CurrencyType) => void;
 };
 
 export const CurrencyButton = ({
-  currency,
-  isOpen,
-  onClick,
-  children,
+  currenciesList,
+  initialCurrencyCode = "USD",
+  isLoading = false,
+  error = null,
+  onCurrencyChange,
 }: CurrencyButtonProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCurrencyCode, setSelectedCurrencyCode] =
+    useState(initialCurrencyCode);
+  const selectedCurrency =
+    currenciesList.find((currency) => currency.code === selectedCurrencyCode) ??
+    currenciesList[0];
+
+  const selectCurrency = (currency: CurrencyType) => {
+    setSelectedCurrencyCode(currency.code);
+    setIsOpen(false);
+    onCurrencyChange?.(currency);
+  };
+
   return (
     <div className="relative w-fit">
       <button
         type="button"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        disabled={!currency}
+        disabled={!selectedCurrency}
         className="flex h-10 w-24 cursor-pointer items-center justify-between gap-2 rounded-md bg-Neutral-900 px-2.5 text-sm font-medium text-Neutral-50 disabled:cursor-not-allowed disabled:opacity-60"
-        onClick={onClick}
+        onClick={() => setIsOpen((currentIsOpen) => !currentIsOpen)}
       >
-        {currency ? (
+        {selectedCurrency ? (
           <span className="flex items-center gap-2">
             <img
-              src={currency.flagSrc}
+              src={selectedCurrency.flagSrc}
               alt=""
               aria-hidden="true"
               className="h-6 w-6 rounded-full object-cover"
             />
-            <span>{currency.code}</span>
+            <span>{selectedCurrency.code}</span>
           </span>
         ) : (
           <span>...</span>
@@ -46,7 +62,27 @@ export const CurrencyButton = ({
         />
       </button>
 
-      {children}
+      {isOpen && (
+        <>
+          {isLoading && (
+            <p className="absolute left-0 top-full z-10 mt-2 text-sm text-slate-300">
+              Loading currencies...
+            </p>
+          )}
+          {error && (
+            <p className="absolute left-0 top-full z-10 mt-2 text-sm text-Red-500">
+              {error}
+            </p>
+          )}
+          {!isLoading && !error && (
+            <CurrencyItemGroup
+              currenciesList={currenciesList}
+              selectedCurrencyCode={selectedCurrency?.code ?? selectedCurrencyCode}
+              onSelectCurrency={selectCurrency}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
