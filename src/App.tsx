@@ -1,7 +1,7 @@
-import { CurrencyButton } from "./components/layout/CurrencyButton";
-import { LiveRatesGroup } from "./components/layout/LiveRatesGroup";
-import { SelectItemGroup } from "./components/layout/SelectItemGroup";
-import { TabButtonGroup } from "./components/layout/TabButtonGroup";
+import { CurrencyButton } from "./components/currency/CurrencyButton";
+import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
+import { SelectItemGroup } from "./components/ui/SelectItemGroup";
+import { TabButtonGroup } from "./components/ui/TabButtonGroup";
 import { useCurrencies } from "./hooks/useCurrencies";
 import { useLiveRates } from "./hooks/useLiveRates";
 
