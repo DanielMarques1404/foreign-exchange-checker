@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { CurrencyType } from "../../domain/entities";
 import { CurrencyItemGroup } from "./CurrencyItemGroup";
@@ -18,6 +18,7 @@ export const CurrencyButton = ({
   error = null,
   onCurrencyChange,
 }: CurrencyButtonProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCurrencyCode, setSelectedCurrencyCode] =
     useState(initialCurrencyCode);
@@ -31,8 +32,34 @@ export const CurrencyButton = ({
     onCurrencyChange?.(currency);
   };
 
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="relative w-fit">
+    <div ref={containerRef} className="relative w-fit">
       <button
         type="button"
         aria-expanded={isOpen}
