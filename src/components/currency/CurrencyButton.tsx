@@ -6,6 +6,7 @@ import { CurrencyItemGroup } from "./CurrencyItemGroup";
 type CurrencyButtonProps = {
   currenciesList: CurrencyType[];
   initialCurrencyCode?: string;
+  selectedCurrencyCode?: string;
   isLoading?: boolean;
   error?: string | null;
   onCurrencyChange?: (currency: CurrencyType) => void;
@@ -14,20 +15,28 @@ type CurrencyButtonProps = {
 export const CurrencyButton = ({
   currenciesList,
   initialCurrencyCode = "USD",
+  selectedCurrencyCode,
   isLoading = false,
   error = null,
   onCurrencyChange,
 }: CurrencyButtonProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCurrencyCode, setSelectedCurrencyCode] =
+  const [internalSelectedCurrencyCode, setInternalSelectedCurrencyCode] =
     useState(initialCurrencyCode);
+  const currentSelectedCurrencyCode =
+    selectedCurrencyCode ?? internalSelectedCurrencyCode;
   const selectedCurrency =
-    currenciesList.find((currency) => currency.code === selectedCurrencyCode) ??
+    currenciesList.find(
+      (currency) => currency.code === currentSelectedCurrencyCode,
+    ) ??
     currenciesList[0];
 
   const selectCurrency = (currency: CurrencyType) => {
-    setSelectedCurrencyCode(currency.code);
+    if (selectedCurrencyCode === undefined) {
+      setInternalSelectedCurrencyCode(currency.code);
+    }
+
     setIsOpen(false);
     onCurrencyChange?.(currency);
   };
@@ -104,7 +113,9 @@ export const CurrencyButton = ({
           {!isLoading && !error && (
             <CurrencyItemGroup
               currenciesList={currenciesList}
-              selectedCurrencyCode={selectedCurrency?.code ?? selectedCurrencyCode}
+              selectedCurrencyCode={
+                selectedCurrency?.code ?? currentSelectedCurrencyCode
+              }
               onSelectCurrency={selectCurrency}
             />
           )}

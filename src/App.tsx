@@ -1,4 +1,5 @@
 import { CurrencyButton } from "./components/currency/CurrencyButton";
+import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { SelectItemGroup } from "./components/ui/SelectItemGroup";
 import { TabButtonGroup } from "./components/ui/TabButtonGroup";
@@ -15,7 +16,7 @@ function App() {
 
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
-      <section className="mx-auto flex max-w-5xl flex-col gap-8">
+      <section className="mx-auto flex flex-col gap-8">
         <img
           className="h-10 w-fit"
           src="/assets/images/logo.svg"
@@ -64,6 +65,11 @@ function App() {
               error={currenciesError}
             />
           </div>
+          <ExchangeTrade
+            currenciesList={currenciesList}
+            isLoadingCurrencies={isLoadingCurrencies}
+            currenciesError={currenciesError}
+          />
         </div>
       </section>
     </main>
