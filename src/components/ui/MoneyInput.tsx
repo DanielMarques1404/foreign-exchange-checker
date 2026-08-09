@@ -52,6 +52,7 @@ export const MoneyInput = ({
       placeholder={placeholder}
       className={cn(
         "bg-Neutral-800 text-2xl text-Neutral-50 placeholder:text-Neutral-500 outline-none",
+        readOnly ? "cursor-not-allowed text-Lime-500 font-bold" : "cursor-text",
         className,
       )}
     />

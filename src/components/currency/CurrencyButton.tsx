@@ -74,7 +74,7 @@ export const CurrencyButton = ({
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         disabled={!selectedCurrency}
-        className="flex h-10 w-24 cursor-pointer items-center justify-between gap-2 rounded-md bg-Neutral-900 px-2.5 text-sm font-medium text-Neutral-50 disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex h-10 w-24 cursor-pointer items-center justify-between gap-2 rounded-md bg-Neutral-500 border border-Neutral-400 px-2.5 text-sm font-medium text-Neutral-50 disabled:cursor-not-allowed disabled:opacity-60"
         onClick={() => setIsOpen((currentIsOpen) => !currentIsOpen)}
       >
         {selectedCurrency ? (
