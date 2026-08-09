@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import { CurrencyType } from "../../domain/entities";
-import { ExchangeBox } from "./ExchangeBox";
 import { FavoritedButton } from "../ui/FavoritedButton";
 import { LogButton } from "../ui/LogButton";
+import { ExchangeBox } from "./ExchangeBox";
 
 type ExchangeTradeProps = {
   currenciesList: CurrencyType[];
@@ -96,9 +96,13 @@ export const ExchangeTrade = ({
           />
         </div>
         <div className="flex w-full text-sm text-Neutral-50 items-center justify-between border-dashed border-t border-Neutral-500 px-5 py-4">
-          <span>1 {sendCurrencyCode} = {effectiveConversionRate.toFixed(4)}{" "}{receiveCurrencyCode}</span>
-          <FavoritedButton />
-          <LogButton />
+          <span>
+            {`1 ${sendCurrencyCode} = ${effectiveConversionRate.toFixed(4)} ${receiveCurrencyCode}`}
+          </span>
+          <div className="flex gap-2">
+            <FavoritedButton />
+            <LogButton />
+          </div>
         </div>
       </div>
     </div>
