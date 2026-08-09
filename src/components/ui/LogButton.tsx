@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import type { ButtonHTMLAttributes, MouseEvent } from "react";
 import { useState } from "react";
 
@@ -20,14 +20,13 @@ const logButtonVariants = cva(
   },
 );
 
-type LogButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
-  Omit<VariantProps<typeof logButtonVariants>, "logged"> & {
-    isLogged?: boolean;
-    defaultLogged?: boolean;
-    logLabel?: string;
-    loggedLabel?: string;
-    onLoggedChange?: (isLogged: boolean) => void;
-  };
+type LogButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  isLogged?: boolean;
+  defaultLogged?: boolean;
+  logLabel?: string;
+  loggedLabel?: string;
+  onLoggedChange?: (isLogged: boolean) => void;
+};
 
 export const LogButton = ({
   isLogged,

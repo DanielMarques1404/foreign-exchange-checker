@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
 import type { ButtonHTMLAttributes, MouseEvent } from "react";
 import { useState } from "react";
 
@@ -25,15 +25,14 @@ const favoritedButtonVariants = cva(
   },
 );
 
-type FavoritedButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
-  Omit<VariantProps<typeof favoritedButtonVariants>, "favorited" | "label"> & {
-    isFavorited?: boolean;
-    defaultFavorited?: boolean;
-    showLabel?: boolean;
-    favoriteLabel?: string;
-    favoritedLabel?: string;
-    onFavoritedChange?: (isFavorited: boolean) => void;
-  };
+type FavoritedButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  isFavorited?: boolean;
+  defaultFavorited?: boolean;
+  showLabel?: boolean;
+  favoriteLabel?: string;
+  favoritedLabel?: string;
+  onFavoritedChange?: (isFavorited: boolean) => void;
+};
 
 export const FavoritedButton = ({
   isFavorited,

@@ -67,7 +67,7 @@ export const ExchangeTrade = ({
             type="button"
             aria-label="Swap currencies"
             onClick={swapCurrencies}
-            className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center bg-Neutral-600 border border-Neutral-300 rounded-xl"
+            className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center text-Neutral-50 bg-Neutral-500 hover:bg-Neutral-400 border border-Neutral-300 rounded-xl"
           >
             <img
               src="/assets/images/icon-exchange-vertical.svg"
