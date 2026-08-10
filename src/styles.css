@@ -26,8 +26,20 @@
   --color-Red-500: hsl(0, 100%, 63%);
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background: var(--color-Neutral-900);
+}
+
 body {
   margin: 0;
+  min-width: 320px;
+  background: var(--color-Neutral-900);
   font-family: var(--font-mono);
 }
 

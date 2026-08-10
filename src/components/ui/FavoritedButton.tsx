@@ -5,7 +5,7 @@ import { useState } from "react";
 import { cn } from "../../utils/cn";
 
 const favoritedButtonVariants = cva(
-  "flex cursor-pointer items-center justify-center gap-2 rounded-xl border text-sm font-medium tracking-[0.2em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed",
+  "flex cursor-pointer items-center justify-center gap-2 rounded-xl border text-sm font-medium tracking-[0.2em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed w-[117px]",
   {
     variants: {
       favorited: {

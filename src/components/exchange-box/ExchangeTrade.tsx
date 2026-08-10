@@ -50,10 +50,10 @@ export const ExchangeTrade = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 bg-Neutral-900 p-5">
+    <div className="flex flex-col gap-4 bg-Neutral-900 p-2">
       <span>CHECK THE RATE</span>
-      <div className="flex flex-col bg-Neutral-700 rounded-3xl items-center justify-between gap-4">
-        <div className="flex flex-col md:flex-row w-full items-center justify-between gap-4 p-5">
+      <div className="flex flex-col bg-Neutral-700 rounded-3xl gap-4 w-full">
+        <div className="flex flex-col md:flex-row w-full items-center justify-center gap-4 p-5">
           <ExchangeBox
             kind="SEND"
             currenciesList={currenciesList}
@@ -95,7 +95,7 @@ export const ExchangeTrade = ({
             }
           />
         </div>
-        <div className="flex w-full text-sm text-Neutral-50 items-center justify-between border-dashed border-t border-Neutral-500 px-5 py-4">
+        <div className="flex flex-col md:flex-row gap-2 w-full text-sm text-Neutral-50 items-center justify-center md:justify-between border-dashed border-t border-Neutral-500 px-5 py-4">
           <span>
             {`1 ${sendCurrencyCode} = ${effectiveConversionRate.toFixed(4)} ${receiveCurrencyCode}`}
           </span>

@@ -1,4 +1,3 @@
-import { CurrencyButton } from "./components/currency/CurrencyButton";
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { SelectItemGroup } from "./components/ui/SelectItemGroup";
@@ -15,18 +14,15 @@ function App() {
   } = useCurrencies();
 
   return (
-    <main className="min-h-screen bg-slate-950 px-6 py-10 text-slate-100">
-      <section className="mx-auto flex flex-col gap-8">
+    <main className="min-h-dvh w-full bg-Neutral-900 p-1 text-Neutral-50">
+      <section className="flex flex-col gap-8">
         <img
           className="h-10 w-fit"
           src="/assets/images/logo.svg"
           alt="FX Checker"
         />
 
-        <div className="flex flex-col gap-2 rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/30">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-            FX Checker
-          </h1>
+        <div className="flex flex-col gap-2 rounded-3xl border border-Neutral-600 bg-Neutral-900 p-2 shadow-2xl shadow-black/30">
           <div className="w-full overflow-hidden">
             {isLoading && (
               <p className="text-sm text-slate-300">Carregando cotacoes...</p>
@@ -36,14 +32,7 @@ function App() {
               <LiveRatesGroup liveRatesList={liveRatesList} />
             )}
           </div>
-          <TabButtonGroup
-            tabButtons={[
-              { id: 0, label: "history", counter: 8 },
-              { id: 1, label: "compare" },
-              { id: 2, label: "favorites", counter: 5 },
-              { id: 3, label: "log", counter: 6 },
-            ]}
-          />
+
           <div className="mx-auto w-2/5">
             <SelectItemGroup
               selectItems={[
@@ -53,22 +42,18 @@ function App() {
               ]}
             />
           </div>
-          <div className="mx-auto flex w-2/5 items-center justify-between gap-4">
-            <CurrencyButton
-              currenciesList={currenciesList}
-              isLoading={isLoadingCurrencies}
-              error={currenciesError}
-            />
-            <CurrencyButton
-              currenciesList={currenciesList}
-              isLoading={isLoadingCurrencies}
-              error={currenciesError}
-            />
-          </div>
           <ExchangeTrade
             currenciesList={currenciesList}
             isLoadingCurrencies={isLoadingCurrencies}
             currenciesError={currenciesError}
+          />
+          <TabButtonGroup
+            tabButtons={[
+              { id: 0, label: "history", counter: 8 },
+              { id: 1, label: "compare" },
+              { id: 2, label: "favorites", counter: 5 },
+              { id: 3, label: "log", counter: 6 },
+            ]}
           />
         </div>
       </section>

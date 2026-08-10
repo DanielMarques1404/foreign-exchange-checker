@@ -26,11 +26,11 @@ export const ExchangeBox = ({
   onCurrencyChange,
 }: ExchangeBoxProps) => {
   return (
-    <div className="flex flex-col gap-4 rounded-3xl bg-Neutral-600 p-5 border border-Neutral-300 w-full">
+    <div className="flex flex-col gap-4 rounded-3xl md:w-77.75 xl:w-112.5 bg-Neutral-600 p-5 border border-Neutral-300">
       <label className="block text-[14px] leading-[120%] text-Neutral-100">
         {kind === "SEND" ? "SEND" : "RECEIVE"}
       </label>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-center gap-4">
         <MoneyInput
           value={value}
           readOnly={readOnly}

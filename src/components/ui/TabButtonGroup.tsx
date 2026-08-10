@@ -11,7 +11,7 @@ export const TabButtonGroup = (props: TabButtonGroupProps) => {
   const [selectedTabId, setSelectedTabId] = useState(0);
 
   return (
-    <div role="tablist" className="flex">
+    <div role="tablist" className="flex bg-Neutral-900">
       {props.tabButtons.map((tabButton) => (
         <TabButton
           key={tabButton.id}
