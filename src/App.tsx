@@ -1,5 +1,6 @@
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
+import { MessageBox } from "./components/messages/MessageBox";
 import { SelectItemGroup } from "./components/ui/SelectItemGroup";
 import { TabButtonGroup } from "./components/ui/TabButtonGroup";
 import { useCurrencies } from "./hooks/useCurrencies";
@@ -54,6 +55,23 @@ function App() {
               { id: 2, label: "favorites", counter: 5 },
               { id: 3, label: "log", counter: 6 },
             ]}
+          />
+        </div>
+        <div className="flex gap-4">
+          <MessageBox label="open" value={123.45} className="w-35 h-20.25" />
+          <MessageBox label="last" value={85.45} className="w-35 h-20.25" />
+          <MessageBox
+            label="change"
+            value={123.45}
+            showSign
+            className="w-35 h-20.25"
+          />
+          <MessageBox
+            label="% change"
+            value={3.45}
+            showSign
+            showPercent
+            className="w-35 h-20.25"
           />
         </div>
       </section>
