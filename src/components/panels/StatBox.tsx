@@ -1,6 +1,6 @@
 import { cn } from "../../utils/cn";
 
-type MessageBoxProps = {
+type StatBoxProps = {
   label: string;
   value?: number;
   className?: string;
@@ -8,7 +8,7 @@ type MessageBoxProps = {
   showSign?: boolean;
 };
 
-export const MessageBox = (props: MessageBoxProps) => {
+export const StatBox = (props: StatBoxProps) => {
   return (
     <div
       className={cn(

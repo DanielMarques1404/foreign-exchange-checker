@@ -1,7 +1,7 @@
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
-import { MessageBox } from "./components/messages/MessageBox";
-import { MessageTree } from "./components/messages/MessageTree";
+import { PeriodNav } from "./components/panels/PeriodNav";
+import { StatBox } from "./components/panels/StatBox";
 import { SelectItemGroup } from "./components/ui/SelectItemGroup";
 import { TabButtonGroup } from "./components/ui/TabButtonGroup";
 import { useCurrencies } from "./hooks/useCurrencies";
@@ -59,15 +59,15 @@ function App() {
           />
         </div>
         <div className="flex gap-4">
-          <MessageBox label="open" value={123.45} className="w-35 h-20.25" />
-          <MessageBox label="last" value={85.45} className="w-35 h-20.25" />
-          <MessageBox
+          <StatBox label="open" value={123.45} className="w-35 h-20.25" />
+          <StatBox label="last" value={85.45} className="w-35 h-20.25" />
+          <StatBox
             label="change"
             value={123.45}
             showSign
             className="w-35 h-20.25"
           />
-          <MessageBox
+          <StatBox
             label="% change"
             value={3.45}
             showSign
@@ -75,7 +75,7 @@ function App() {
             className="w-35 h-20.25"
           />
         </div>
-        <MessageTree />
+        <PeriodNav />
       </section>
     </main>
   );
