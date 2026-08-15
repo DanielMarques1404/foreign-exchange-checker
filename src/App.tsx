@@ -1,9 +1,9 @@
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
-import { PeriodNav } from "./components/panels/PeriodNav";
-import { StatBox } from "./components/panels/StatBox";
+import { HistoryTab } from "./components/tabs/History";
 import { SelectItemGroup } from "./components/ui/SelectItemGroup";
 import { TabButtonGroup } from "./components/ui/TabButtonGroup";
+import { StatsType } from "./domain/entities";
 import { useCurrencies } from "./hooks/useCurrencies";
 import { useLiveRates } from "./hooks/useLiveRates";
 
@@ -14,6 +14,13 @@ function App() {
     isLoading: isLoadingCurrencies,
     error: currenciesError,
   } = useCurrencies();
+
+  const statsDefault: StatsType[] = [
+    { label: "open", value: 100, showPercent: false, showSign: false },
+    { label: "last", value: 60, showPercent: false, showSign: false },
+    { label: "change", value: 40, showPercent: false, showSign: true },
+    { label: "% change", value: 0.16, showPercent: true, showSign: true },
+  ];
 
   return (
     <main className="min-h-dvh w-full bg-Neutral-900 p-1 text-Neutral-50">
@@ -49,33 +56,18 @@ function App() {
             isLoadingCurrencies={isLoadingCurrencies}
             currenciesError={currenciesError}
           />
-          <TabButtonGroup
-            tabButtons={[
-              { id: 0, label: "history", counter: 8 },
-              { id: 1, label: "compare" },
-              { id: 2, label: "favorites", counter: 5 },
-              { id: 3, label: "log", counter: 6 },
-            ]}
-          />
+          <div className="flex flex-col gap-5 px-6">
+            <TabButtonGroup
+              tabButtons={[
+                { id: 0, label: "history", counter: 8 },
+                { id: 1, label: "compare" },
+                { id: 2, label: "favorites", counter: 5 },
+                { id: 3, label: "log", counter: 6 },
+              ]}
+            />
+            <HistoryTab stats={statsDefault} />
+          </div>
         </div>
-        <div className="flex gap-4">
-          <StatBox label="open" value={123.45} className="w-35 h-20.25" />
-          <StatBox label="last" value={85.45} className="w-35 h-20.25" />
-          <StatBox
-            label="change"
-            value={123.45}
-            showSign
-            className="w-35 h-20.25"
-          />
-          <StatBox
-            label="% change"
-            value={3.45}
-            showSign
-            showPercent
-            className="w-35 h-20.25"
-          />
-        </div>
-        <PeriodNav />
       </section>
     </main>
   );

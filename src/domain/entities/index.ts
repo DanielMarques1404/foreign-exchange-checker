@@ -23,3 +23,10 @@ export type SelectItemType = {
   label: string;
   counter?: number;
 };
+
+export type StatsType = {
+  label: string;
+  value?: number;
+  showPercent?: boolean;
+  showSign?: boolean;
+}
