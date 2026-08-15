@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { HistoryTab } from "./components/tabs/History";
@@ -14,6 +15,8 @@ function App() {
     isLoading: isLoadingCurrencies,
     error: currenciesError,
   } = useCurrencies();
+
+  const [selectedTabId, setSelectedTabId] = useState(0);
 
   const statsDefault: StatsType[] = [
     { label: "open", value: 100, showPercent: false, showSign: false },
@@ -58,6 +61,8 @@ function App() {
           />
           <div className="flex flex-col gap-5 px-6">
             <TabButtonGroup
+              selectedTabId={selectedTabId}
+              onSelectTabId={setSelectedTabId}
               tabButtons={[
                 { id: 0, label: "history", counter: 8 },
                 { id: 1, label: "compare" },
@@ -65,7 +70,10 @@ function App() {
                 { id: 3, label: "log", counter: 6 },
               ]}
             />
-            <HistoryTab stats={statsDefault} />
+            {selectedTabId === 0 && <HistoryTab stats={statsDefault} />}
+            {selectedTabId === 1 && <></>}
+            {selectedTabId === 2 && <></>}
+            {selectedTabId === 3 && <></>}
           </div>
         </div>
       </section>
