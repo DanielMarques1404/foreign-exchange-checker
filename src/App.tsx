@@ -1,6 +1,7 @@
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { MessageBox } from "./components/messages/MessageBox";
+import { MessageTree } from "./components/messages/MessageTree";
 import { SelectItemGroup } from "./components/ui/SelectItemGroup";
 import { TabButtonGroup } from "./components/ui/TabButtonGroup";
 import { useCurrencies } from "./hooks/useCurrencies";
@@ -74,6 +75,7 @@ function App() {
             className="w-35 h-20.25"
           />
         </div>
+        <MessageTree />
       </section>
     </main>
   );
