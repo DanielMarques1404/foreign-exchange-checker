@@ -2,17 +2,25 @@ import type { KeyboardEvent } from "react";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { SelectItemType } from "../../domain/entities";
+import { cn } from "../../utils/cn";
 import { SelectItem } from "./SelectItem";
 
 type SelectItemGroupProps = {
   selectItems: SelectItemType[];
+  selectedItemId: number;
+  onSelectItemId: (id: number) => void;
+  className?: string;
 };
 
-export const SelectItemGroup = ({ selectItems }: SelectItemGroupProps) => {
+export const SelectItemGroup = ({
+  selectItems,
+  selectedItemId,
+  onSelectItemId,
+  className,
+}: SelectItemGroupProps) => {
   const listboxId = useId();
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [selectedItemId, setSelectedItemId] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const optionRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const selectedItem =
@@ -45,7 +53,7 @@ export const SelectItemGroup = ({ selectItems }: SelectItemGroupProps) => {
   };
 
   const selectOption = (id: number) => {
-    setSelectedItemId(id);
+    onSelectItemId(id);
     setIsOpen(false);
     triggerRef.current?.focus();
   };
@@ -118,7 +126,7 @@ export const SelectItemGroup = ({ selectItems }: SelectItemGroupProps) => {
   }
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div ref={containerRef} className={cn("relative w-full", className)}>
       <button
         ref={triggerRef}
         type="button"
@@ -128,7 +136,7 @@ export const SelectItemGroup = ({ selectItems }: SelectItemGroupProps) => {
         aria-haspopup="listbox"
         onClick={() => setIsOpen((currentIsOpen) => !currentIsOpen)}
         onKeyDown={handleTriggerKeyDown}
-        className="flex h-12 w-full cursor-pointer items-center justify-between gap-2 bg-Neutral-900 px-2 text-left"
+        className="flex h-12 w-full cursor-pointer items-center justify-between gap-2 bg-Neutral-700 px-2 text-left border border-Neutral-400 rounded-md"
       >
         <span className="text-neutral-50">{selectedItem.label.toUpperCase()}</span>
         <span className="flex items-center gap-2">

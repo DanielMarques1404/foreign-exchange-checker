@@ -8,8 +8,8 @@ type HistoryTabProps = {
 
 export const HistoryTab = ({ stats }: HistoryTabProps) => {
   return (
-    <section className="flex flex-col gap-4 items-start">
-      <div className="flex gap-4">
+    <section className="flex flex-col gap-4 justify-center items-start">
+      <div className="grid grid-cols-2 grid-rows-2 md:flex gap-2.5 w-full">
         {stats.map((stat, index) => (
           <StatBox
             key={index}

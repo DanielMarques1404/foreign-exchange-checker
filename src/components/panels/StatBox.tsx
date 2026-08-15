@@ -12,7 +12,7 @@ export const StatBox = (props: StatBoxProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 bg-Neutral-700 border border-Neutral-600 rounded-md px-5 py-3 w-35 h-20.25",
+        "flex flex-col gap-4 bg-Neutral-700 border border-Neutral-600 rounded-md px-5 py-3 w-full h-20.25 md:w-35",
         props.className,
       )}
     >

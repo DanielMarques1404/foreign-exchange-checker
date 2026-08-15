@@ -1,30 +1,23 @@
-import { useEffect, useState } from "react";
-
 import { TabButtonType } from "../../domain/entities";
+import { cn } from "../../utils/cn";
 import { TabButton } from "./TabButton";
 
 type TabButtonGroupProps = {
   tabButtons: TabButtonType[];
   selectedTabId: number;
   onSelectTabId: (id: number) => void;
+  className?: string;
 };
 
 export const TabButtonGroup = (props: TabButtonGroupProps) => {
-  const [selectedTabId, setSelectedTabId] = useState(props.selectedTabId);
-
-  useEffect(() => {
-    setSelectedTabId(props.selectedTabId);
-  }, [props.selectedTabId]);
-
   return (
-    <nav role="tablist" className="flex bg-Neutral-900">
+    <nav role="tablist" className={cn("flex bg-Neutral-900", props.className)}>
       {props.tabButtons.map((tabButton) => (
         <TabButton
           key={tabButton.id}
           tabButton={tabButton}
-          selected={selectedTabId === tabButton.id}
+          selected={props.selectedTabId === tabButton.id}
           onSelect={() => {
-            setSelectedTabId(tabButton.id);
             props.onSelectTabId(tabButton.id);
           }}
         />

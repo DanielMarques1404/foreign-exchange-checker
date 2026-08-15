@@ -2,8 +2,7 @@ import { useState } from "react";
 import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { HistoryTab } from "./components/tabs/History";
-import { SelectItemGroup } from "./components/ui/SelectItemGroup";
-import { TabButtonGroup } from "./components/ui/TabButtonGroup";
+import { ViewSwitcher } from "./components/ui/ViewSwitcher";
 import { StatsType } from "./domain/entities";
 import { useCurrencies } from "./hooks/useCurrencies";
 import { useLiveRates } from "./hooks/useLiveRates";
@@ -26,58 +25,52 @@ function App() {
   ];
 
   return (
-    <main className="min-h-dvh w-full bg-Neutral-900 p-1 text-Neutral-50">
-      <section className="flex flex-col gap-8">
-        <img
-          className="h-10 w-fit"
-          src="/assets/images/logo.svg"
-          alt="FX Checker"
-        />
-
-        <div className="flex flex-col gap-2 rounded-3xl border border-Neutral-600 bg-Neutral-900 p-2 shadow-2xl shadow-black/30">
-          <div className="w-full overflow-hidden">
-            {isLoading && (
-              <p className="text-sm text-slate-300">Carregando cotacoes...</p>
-            )}
-            {error && <p className="text-sm text-Red-500">{error}</p>}
-            {!isLoading && !error && (
-              <LiveRatesGroup liveRatesList={liveRatesList} />
-            )}
-          </div>
-
-          <div className="mx-auto w-2/5">
-            <SelectItemGroup
-              selectItems={[
-                { id: 0, label: "history" },
-                { id: 1, label: "compare", counter: 12 },
-                { id: 2, label: "favorites" },
-              ]}
-            />
-          </div>
-          <ExchangeTrade
-            currenciesList={currenciesList}
-            isLoadingCurrencies={isLoadingCurrencies}
-            currenciesError={currenciesError}
+    <section className="flex flex-col min-h-dvh w-full bg-Neutral-900 text-Neutral-50">
+      <header className="flex flex-col">
+        <div className="flex items-center justify-between p-4">
+          <img
+            className="h-5 md:h-6.5 w-fit"
+            src="/assets/images/logo.svg"
+            alt="FX Checker"
           />
-          <div className="flex flex-col gap-5 px-6">
-            <TabButtonGroup
-              selectedTabId={selectedTabId}
-              onSelectTabId={setSelectedTabId}
-              tabButtons={[
-                { id: 0, label: "history", counter: 8 },
-                { id: 1, label: "compare" },
-                { id: 2, label: "favorites", counter: 5 },
-                { id: 3, label: "log", counter: 6 },
-              ]}
-            />
-            {selectedTabId === 0 && <HistoryTab stats={statsDefault} />}
-            {selectedTabId === 1 && <></>}
-            {selectedTabId === 2 && <></>}
-            {selectedTabId === 3 && <></>}
-          </div>
+          <span className="text-[10px] md:text-[14px] text-Neutral-200">
+            {`${currenciesList?.length} CURRENCIES · EOD · ECB DATA`}
+          </span>
         </div>
-      </section>
-    </main>
+        <div className="w-full overflow-hidden">
+          {isLoading && (
+            <p className="text-sm text-slate-300">Carregando cotacoes...</p>
+          )}
+          {error && <p className="text-sm text-Red-500">{error}</p>}
+          {!isLoading && !error && (
+            <LiveRatesGroup liveRatesList={liveRatesList} />
+          )}
+        </div>
+      </header>
+      <main className="flex flex-col px-8 py-4 gap-10">
+        <ExchangeTrade
+          currenciesList={currenciesList}
+          isLoadingCurrencies={isLoadingCurrencies}
+          currenciesError={currenciesError}
+        />
+        <div className="flex flex-col gap-5">
+          <ViewSwitcher
+            selectedItemId={selectedTabId}
+            onSelectItemId={setSelectedTabId}
+            items={[
+              { id: 0, label: "history" },
+              { id: 1, label: "compare", counter: 12 },
+              { id: 2, label: "favorites" },
+              { id: 3, label: "log", counter: 6 },
+            ]}
+          />
+          {selectedTabId === 0 && <HistoryTab stats={statsDefault} />}
+          {selectedTabId === 1 && <></>}
+          {selectedTabId === 2 && <></>}
+          {selectedTabId === 3 && <></>}
+        </div>
+      </main>
+    </section>
   );
 }
 
