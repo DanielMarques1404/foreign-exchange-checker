@@ -50,7 +50,7 @@ export const ExchangeTrade = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 bg-Neutral-900 p-2">
+    <div className="flex flex-col gap-4 bg-Neutral-900 p-4 w-full">
       <span>CHECK THE RATE</span>
       <div className="flex flex-col bg-Neutral-700 rounded-3xl gap-4 w-full">
         <div className="flex flex-col md:flex-row w-full items-center justify-center gap-4 p-5">

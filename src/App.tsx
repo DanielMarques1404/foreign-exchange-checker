@@ -47,13 +47,13 @@ function App() {
           )}
         </div>
       </header>
-      <main className="flex flex-col px-8 py-4 gap-10">
+      <main className="flex flex-col p-4 gap-10 items-center justify-center w-full">
         <ExchangeTrade
           currenciesList={currenciesList}
           isLoadingCurrencies={isLoadingCurrencies}
           currenciesError={currenciesError}
         />
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 w-full px-4">
           <ViewSwitcher
             selectedItemId={selectedTabId}
             onSelectItemId={setSelectedTabId}
