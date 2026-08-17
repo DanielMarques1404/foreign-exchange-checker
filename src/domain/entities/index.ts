@@ -29,4 +29,5 @@ export type StatsType = {
   value?: number;
   showPercent?: boolean;
   showSign?: boolean;
-}
+  showTrendIcon?: boolean;
+};

@@ -10,6 +10,7 @@ type ExchangeTradeProps = {
   conversionRate?: number;
   isLoadingCurrencies?: boolean;
   currenciesError?: string | null;
+  onCurrencyPairChange?: (base: string, quote: string) => void;
 };
 
 const initialSendCurrencyCode = "USD";
@@ -20,6 +21,7 @@ export const ExchangeTrade = ({
   conversionRate = 1.2,
   isLoadingCurrencies = false,
   currenciesError = null,
+  onCurrencyPairChange,
 }: ExchangeTradeProps) => {
   const [sendValue, setSendValue] = useState<number | null>(null);
   const [sendCurrencyCode, setSendCurrencyCode] = useState(
@@ -45,8 +47,12 @@ export const ExchangeTrade = ({
       : Number((sendValue * effectiveConversionRate).toFixed(2));
 
   const swapCurrencies = () => {
-    setSendCurrencyCode(receiveCurrencyCode);
-    setReceiveCurrencyCode(sendCurrencyCode);
+    const nextSendCurrencyCode = receiveCurrencyCode;
+    const nextReceiveCurrencyCode = sendCurrencyCode;
+
+    setSendCurrencyCode(nextSendCurrencyCode);
+    setReceiveCurrencyCode(nextReceiveCurrencyCode);
+    onCurrencyPairChange?.(nextSendCurrencyCode, nextReceiveCurrencyCode);
   };
 
   return (
@@ -61,7 +67,10 @@ export const ExchangeTrade = ({
             isLoadingCurrencies={isLoadingCurrencies}
             currenciesError={currenciesError}
             onChangeValue={setSendValue}
-            onCurrencyChange={(currency) => setSendCurrencyCode(currency.code)}
+            onCurrencyChange={(currency) => {
+              setSendCurrencyCode(currency.code);
+              onCurrencyPairChange?.(currency.code, receiveCurrencyCode);
+            }}
           />
           <button
             type="button"
@@ -90,9 +99,10 @@ export const ExchangeTrade = ({
             selectedCurrencyCode={receiveCurrencyCode}
             isLoadingCurrencies={isLoadingCurrencies}
             currenciesError={currenciesError}
-            onCurrencyChange={(currency) =>
-              setReceiveCurrencyCode(currency.code)
-            }
+            onCurrencyChange={(currency) => {
+              setReceiveCurrencyCode(currency.code);
+              onCurrencyPairChange?.(sendCurrencyCode, currency.code);
+            }}
           />
         </div>
         <div className="flex flex-col md:flex-row gap-2 w-full text-sm text-Neutral-50 items-center justify-center md:justify-between border-dashed border-t border-Neutral-500 px-5 py-4">

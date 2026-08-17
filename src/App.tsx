@@ -3,26 +3,28 @@ import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { HistoryTab } from "./components/tabs/History";
 import { ViewSwitcher } from "./components/ui/ViewSwitcher";
-import { StatsType } from "./domain/entities";
 import { useCurrencies } from "./hooks/useCurrencies";
+import { useHistoricalStats } from "./hooks/useHistoricalStats";
 import { useLiveRates } from "./hooks/useLiveRates";
 
 function App() {
+  const [selectedTabId, setSelectedTabId] = useState(0);
+  const [currencyPair, setCurrencyPair] = useState({
+    base: "USD",
+    quote: "EUR",
+  });
   const { liveRatesList, isLoading, error } = useLiveRates();
   const {
     currenciesList,
     isLoading: isLoadingCurrencies,
     error: currenciesError,
   } = useCurrencies();
-
-  const [selectedTabId, setSelectedTabId] = useState(0);
-
-  const statsDefault: StatsType[] = [
-    { label: "open", value: 100, showPercent: false, showSign: false },
-    { label: "last", value: 60, showPercent: false, showSign: false },
-    { label: "change", value: 40, showPercent: false, showSign: true },
-    { label: "% change", value: 0.16, showPercent: true, showSign: true },
-  ];
+  const {
+    stats: historicalStats,
+    latestRate,
+    isLoading: isLoadingHistoricalStats,
+    error: historicalStatsError,
+  } = useHistoricalStats(currencyPair.base, currencyPair.quote);
 
   return (
     <section className="flex flex-col min-h-dvh w-full bg-Neutral-900 text-Neutral-50">
@@ -50,8 +52,10 @@ function App() {
       <main className="flex flex-col p-4 gap-10 items-center justify-center w-full">
         <ExchangeTrade
           currenciesList={currenciesList}
+          conversionRate={latestRate}
           isLoadingCurrencies={isLoadingCurrencies}
           currenciesError={currenciesError}
+          onCurrencyPairChange={(base, quote) => setCurrencyPair({ base, quote })}
         />
         <div className="flex flex-col gap-5 w-full px-4">
           <ViewSwitcher
@@ -64,7 +68,13 @@ function App() {
               { id: 3, label: "log", counter: 6 },
             ]}
           />
-          {selectedTabId === 0 && <HistoryTab stats={statsDefault} />}
+          {selectedTabId === 0 && (
+            <HistoryTab
+              stats={historicalStats}
+              isLoading={isLoadingHistoricalStats}
+              error={historicalStatsError}
+            />
+          )}
           {selectedTabId === 1 && <></>}
           {selectedTabId === 2 && <></>}
           {selectedTabId === 3 && <></>}

@@ -6,9 +6,14 @@ type StatBoxProps = {
   className?: string;
   showPercent?: boolean;
   showSign?: boolean;
+  showTrendIcon?: boolean;
 };
 
 export const StatBox = (props: StatBoxProps) => {
+  const hasTrend = props.showSign || props.showPercent;
+  const isNegative = props.value !== undefined && props.value < 0;
+  const isPositive = props.value !== undefined && props.value > 0;
+
   return (
     <div
       className={cn(
@@ -20,18 +25,23 @@ export const StatBox = (props: StatBoxProps) => {
       <span
         className={cn(
           "text-Neutral-50 text-[20px]",
-          (props.showSign || props.showPercent) && "text-Green-500",
+          hasTrend && isPositive && "text-Green-500",
+          hasTrend && isNegative && "text-Red-500",
         )}
       >
-        {props.showPercent && props.value !== undefined && props.value > 0
+        {props.showTrendIcon && props.value !== undefined && props.value > 0
           ? "▲ "
-          : props.value !== undefined && props.value < 0
+          : props.showTrendIcon && props.value !== undefined && props.value < 0
             ? "▼ "
             : ""}
         {props.showSign && props.value !== undefined && props.value > 0
           ? "+"
           : ""}
-        {!props.showPercent ? props.value?.toFixed(4) : props.value?.toFixed(2)}
+        {props.value === undefined
+          ? "--"
+          : !props.showPercent
+            ? props.value.toFixed(4)
+            : props.value.toFixed(2)}
         {props.showPercent && props.value !== undefined && (
           <span className="text-sm">%</span>
         )}
