@@ -3,6 +3,7 @@ import { ExchangeTrade } from "./components/exchange-box/ExchangeTrade";
 import { LiveRatesGroup } from "./components/live-rates/LiveRatesGroup";
 import { HistoryTab } from "./components/tabs/History";
 import { ViewSwitcher } from "./components/ui/ViewSwitcher";
+import { HistoricalPeriod } from "./domain/entities";
 import { useCurrencies } from "./hooks/useCurrencies";
 import { useHistoricalStats } from "./hooks/useHistoricalStats";
 import { useLiveRates } from "./hooks/useLiveRates";
@@ -13,6 +14,8 @@ function App() {
     base: "USD",
     quote: "EUR",
   });
+  const [selectedPeriod, setSelectedPeriod] =
+    useState<HistoricalPeriod>("1M");
   const { liveRatesList, isLoading, error } = useLiveRates();
   const {
     currenciesList,
@@ -24,7 +27,7 @@ function App() {
     latestRate,
     isLoading: isLoadingHistoricalStats,
     error: historicalStatsError,
-  } = useHistoricalStats(currencyPair.base, currencyPair.quote);
+  } = useHistoricalStats(currencyPair.base, currencyPair.quote, selectedPeriod);
 
   return (
     <section className="flex flex-col min-h-dvh w-full bg-Neutral-900 text-Neutral-50">
@@ -71,8 +74,10 @@ function App() {
           {selectedTabId === 0 && (
             <HistoryTab
               stats={historicalStats}
+              selectedPeriod={selectedPeriod}
               isLoading={isLoadingHistoricalStats}
               error={historicalStatsError}
+              onSelectPeriod={setSelectedPeriod}
             />
           )}
           {selectedTabId === 1 && <></>}

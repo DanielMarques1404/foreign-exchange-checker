@@ -31,3 +31,5 @@ export type StatsType = {
   showSign?: boolean;
   showTrendIcon?: boolean;
 };
+
+export type HistoricalPeriod = "1D" | "1W" | "1M" | "3M" | "1Y" | "5Y";

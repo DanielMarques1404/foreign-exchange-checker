@@ -1,17 +1,21 @@
-import { StatsType } from "../../domain/entities";
+import { HistoricalPeriod, StatsType } from "../../domain/entities";
 import { PeriodNav } from "../panels/PeriodNav";
 import { StatBox } from "../panels/StatBox";
 
 type HistoryTabProps = {
   stats: StatsType[];
+  selectedPeriod: HistoricalPeriod;
   isLoading?: boolean;
   error?: string | null;
+  onSelectPeriod: (period: HistoricalPeriod) => void;
 };
 
 export const HistoryTab = ({
   stats,
+  selectedPeriod,
   isLoading = false,
   error = null,
+  onSelectPeriod,
 }: HistoryTabProps) => {
   return (
     <section className="flex flex-col gap-4 justify-center items-start">
@@ -31,7 +35,10 @@ export const HistoryTab = ({
           />
         ))}
       </div>
-      <PeriodNav />
+      <PeriodNav
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={onSelectPeriod}
+      />
       <div className="w-full h-94.25 bg-Neutral-600 border border-Neutral-500 rounded-md"></div>
     </section>
   );

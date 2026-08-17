@@ -1,16 +1,38 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { StatsType } from "../domain/entities";
+import { HistoricalPeriod, StatsType } from "../domain/entities";
 import { getHistoricalRates, HistoricalRate } from "../utils/api";
 
 const formatDate = (date: Date) => date.toISOString().slice(0, 10);
 
-const getOneMonthRange = () => {
+const getHistoricalRange = (period: HistoricalPeriod) => {
   const to = new Date();
   const from = new Date(to);
 
-  from.setMonth(from.getMonth() - 1);
+  if (period === "1D") {
+    from.setDate(from.getDate() - 1);
+  }
+
+  if (period === "1W") {
+    from.setDate(from.getDate() - 7);
+  }
+
+  if (period === "1M") {
+    from.setMonth(from.getMonth() - 1);
+  }
+
+  if (period === "3M") {
+    from.setMonth(from.getMonth() - 3);
+  }
+
+  if (period === "1Y") {
+    from.setFullYear(from.getFullYear() - 1);
+  }
+
+  if (period === "5Y") {
+    from.setFullYear(from.getFullYear() - 5);
+  }
 
   return {
     from: formatDate(from),
@@ -40,7 +62,11 @@ const buildStats = (rates: HistoricalRate[]): StatsType[] => {
   ];
 };
 
-export const useHistoricalStats = (base: string, quote: string) => {
+export const useHistoricalStats = (
+  base: string,
+  quote: string,
+  period: HistoricalPeriod,
+) => {
   const [stats, setStats] = useState<StatsType[]>(() => buildStats([]));
   const [latestRate, setLatestRate] = useState<number>();
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +77,7 @@ export const useHistoricalStats = (base: string, quote: string) => {
 
     const fetchHistoricalStats = async () => {
       try {
-        const { from, to } = getOneMonthRange();
+        const { from, to } = getHistoricalRange(period);
 
         setIsLoading(true);
         setError(null);
@@ -83,7 +109,7 @@ export const useHistoricalStats = (base: string, quote: string) => {
     return () => {
       controller.abort();
     };
-  }, [base, quote]);
+  }, [base, period, quote]);
 
   return { stats, latestRate, isLoading, error };
 };

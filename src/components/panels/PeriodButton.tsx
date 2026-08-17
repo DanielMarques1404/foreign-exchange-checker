@@ -1,7 +1,9 @@
+import { HistoricalPeriod } from "../../domain/entities";
+
 type PeriodButtonProps = {
-  label: string;
+  label: HistoricalPeriod;
   isSelected?: boolean;
-  onSelect?: (label: string) => void;
+  onSelect?: (label: HistoricalPeriod) => void;
 };
 
 export const PeriodButton = ({
