@@ -33,3 +33,8 @@ export type StatsType = {
 };
 
 export type HistoricalPeriod = "1D" | "1W" | "1M" | "3M" | "1Y" | "5Y";
+
+export type HistoricalPoint = {
+  date: string;
+  rate: number;
+};

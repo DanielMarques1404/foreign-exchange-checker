@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { HistoricalPeriod, StatsType } from "../domain/entities";
+import {
+  HistoricalPeriod,
+  HistoricalPoint,
+  StatsType,
+} from "../domain/entities";
 import { getHistoricalRates, HistoricalRate } from "../utils/api";
 
 const formatDate = (date: Date) => date.toISOString().slice(0, 10);
@@ -62,12 +66,22 @@ const buildStats = (rates: HistoricalRate[]): StatsType[] => {
   ];
 };
 
+const buildPoints = (rates: HistoricalRate[]): HistoricalPoint[] => {
+  return [...rates]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .map((rate) => ({
+      date: rate.date,
+      rate: rate.rate,
+    }));
+};
+
 export const useHistoricalStats = (
   base: string,
   quote: string,
   period: HistoricalPeriod,
 ) => {
   const [stats, setStats] = useState<StatsType[]>(() => buildStats([]));
+  const [points, setPoints] = useState<HistoricalPoint[]>([]);
   const [latestRate, setLatestRate] = useState<number>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -90,9 +104,11 @@ export const useHistoricalStats = (
           signal: controller.signal,
         });
         const historicalStats = buildStats(response.data);
+        const historicalPoints = buildPoints(response.data);
 
         setStats(historicalStats);
-        setLatestRate(response.data.at(-1)?.rate);
+        setPoints(historicalPoints);
+        setLatestRate(historicalPoints.at(-1)?.rate);
       } catch (error) {
         if (!axios.isCancel(error)) {
           setError("Nao foi possivel carregar o historico da cotacao.");
@@ -111,5 +127,5 @@ export const useHistoricalStats = (
     };
   }, [base, period, quote]);
 
-  return { stats, latestRate, isLoading, error };
+  return { stats, points, latestRate, isLoading, error };
 };

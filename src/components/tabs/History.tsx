@@ -1,9 +1,17 @@
-import { HistoricalPeriod, StatsType } from "../../domain/entities";
+import {
+  HistoricalPeriod,
+  HistoricalPoint,
+  StatsType,
+} from "../../domain/entities";
+import { HistoryChart } from "../panels/HistoryChart";
 import { PeriodNav } from "../panels/PeriodNav";
 import { StatBox } from "../panels/StatBox";
 
 type HistoryTabProps = {
   stats: StatsType[];
+  points: HistoricalPoint[];
+  base: string;
+  quote: string;
   selectedPeriod: HistoricalPeriod;
   isLoading?: boolean;
   error?: string | null;
@@ -12,6 +20,9 @@ type HistoryTabProps = {
 
 export const HistoryTab = ({
   stats,
+  points,
+  base,
+  quote,
   selectedPeriod,
   isLoading = false,
   error = null,
@@ -39,7 +50,7 @@ export const HistoryTab = ({
         selectedPeriod={selectedPeriod}
         onSelectPeriod={onSelectPeriod}
       />
-      <div className="w-full h-94.25 bg-Neutral-600 border border-Neutral-500 rounded-md"></div>
+      <HistoryChart points={points} base={base} quote={quote} />
     </section>
   );
 };

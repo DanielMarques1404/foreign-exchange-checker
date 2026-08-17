@@ -24,6 +24,7 @@ function App() {
   } = useCurrencies();
   const {
     stats: historicalStats,
+    points: historicalPoints,
     latestRate,
     isLoading: isLoadingHistoricalStats,
     error: historicalStatsError,
@@ -74,6 +75,9 @@ function App() {
           {selectedTabId === 0 && (
             <HistoryTab
               stats={historicalStats}
+              points={historicalPoints}
+              base={currencyPair.base}
+              quote={currencyPair.quote}
               selectedPeriod={selectedPeriod}
               isLoading={isLoadingHistoricalStats}
               error={historicalStatsError}
